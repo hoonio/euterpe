@@ -11,6 +11,10 @@
         <img ng-src="{{currentSong.image_large}}">
       </div>
 
+      <div class="img-lookahead">
+        <img ng-src="{{ nextAlbumImg() }}" />
+      </div>
+
       <div class="item">
         <h2>{{currentSong.title}}</h2>
         <p>{{currentSong.artist}}</p>
@@ -26,9 +30,7 @@
           Favorite
         </a>
       </div>
-
     </div>
-
 
   </ion-content>
 </ion-view>

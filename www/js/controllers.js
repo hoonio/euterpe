@@ -3,7 +3,13 @@ angular.module('songhop.controllers', ['ionic', 'songhop.services'])
 /*
 Controller for the discover page
 */
-.controller('DiscoverCtrl', function($scope, $timeout, User) {
+.controller('DiscoverCtrl', function($scope, $timeout, User, Recommendations) {
+  // get our first songs
+  Recommendations.getNextSongs()
+    .then(function(){
+      $scope.currentSong = Recommendations.queue[0];
+    });
+
   // our first three songs
   $scope.songs = [
      {
@@ -35,14 +41,27 @@ Controller for the discover page
      $scope.currentSong.rated = bool;
      $scope.currentSong.hide = true;
 
+     // prepare the next song
+     Recommendations.nextSong();
+
      $timeout(function() {
 
-       var randomSong = Math.round(Math.random() * ($scope.songs.length-1));
-       $scope.currentSong = angular.copy($scope.songs[randomSong]);
+      //  var randomSong = Math.round(Math.random() * ($scope.songs.length-1));
+      //  $scope.currentSong = angular.copy($scope.songs[randomSong]);
+      $scope.currentSong = Recommendations.queue[0];
 
      }, 250);
-
    };
+
+   // used for retrieving the next album image.
+   // if there isn't an album image available next, return empty string.
+   $scope.nextAlbumImg = function() {
+     if (Recommendations.queue.length > 1) {
+       return Recommendations.queue[1].image_large;
+     }
+
+     return '';
+   }
 })
 
 
