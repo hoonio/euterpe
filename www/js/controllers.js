@@ -8,6 +8,7 @@ Controller for the discover page
   Recommendations.getNextSongs()
     .then(function(){
       $scope.currentSong = Recommendations.queue[0];
+      Recommendations.playCurrentSong();
     });
 
   // our first three songs
@@ -45,12 +46,12 @@ Controller for the discover page
      Recommendations.nextSong();
 
      $timeout(function() {
-
       //  var randomSong = Math.round(Math.random() * ($scope.songs.length-1));
       //  $scope.currentSong = angular.copy($scope.songs[randomSong]);
       $scope.currentSong = Recommendations.queue[0];
-
      }, 250);
+
+     Recommendations.playCurrentSong();
    };
 
    // used for retrieving the next album image.
@@ -81,6 +82,8 @@ Controller for the favorites page
 /*
 Controller for our tab bar
 */
-.controller('TabsCtrl', function($scope) {
-
+.controller('TabsCtrl', function($scope, Recommendations) {
+  $scope.enteringFavorites = function() {
+    Recommendations.haltAudio();
+  }
 });

@@ -15,8 +15,6 @@ angular.module('songhop', ['ionic', 'songhop.controllers'])
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
-    
-
   });
 })
 
@@ -63,7 +61,6 @@ angular.module('songhop', ['ionic', 'songhop.controllers'])
   $urlRouterProvider.otherwise('/tab/discover');
 
 })
-
 
 .constant('SERVER', {
   // Local server
