@@ -29,7 +29,13 @@ angular.module('songhop.services', [])
       queue: []
     };
 
-
+    o.init = function() {
+      if (o.queue.length == 0) {
+        return o.getNextSongs();
+      } else {
+        return o.playCurrentSong();
+      }
+    }
 
     o.playCurrentSong = function() {
       var defer = $q.defer();
