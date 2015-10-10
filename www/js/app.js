@@ -67,5 +67,6 @@ angular.module('songhop', ['ionic', 'songhop.controllers'])
   //url: 'http://localhost:3000'
 
   // Public Heroku server
-  url: 'https://ionic-songhop.herokuapp.com'
+  url: 'https://ionic-songhop.herokuapp.com',
+  scid: '1ed7c8c3ff1c4d3e7ecc37858611ac81'
 });

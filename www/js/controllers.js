@@ -52,7 +52,7 @@ Controller for the discover page
   // if there isn't an album image available next, return empty string.
   $scope.nextAlbumImg = function() {
     if (Recommendations.queue.length > 1) {
-      return Recommendations.queue[1].image_large;
+      return Recommendations.queue[1].artwork_url;
     }
     return '';
   };
@@ -63,16 +63,18 @@ Controller for the discover page
 /*
 Controller for the favorites page
 */
-.controller('FavoritesCtrl', function($scope, $window, User) {
+.controller('FavoritesCtrl', function($scope, $window, User, Play) {
   // get the list of our favorites from the user service
   $scope.favorites = User.favorites;
+  $scope.media;
 
   $scope.removeSong = function(song, index) {
     User.removeSongFromFavorites(song, index);
   };
 
   $scope.openSong = function(song) {
-    $window.open(song.open_url, "_system");
+    // $window.open(song.open_url, "_system");
+    Play.playSong(song);
   };
 })
 

@@ -29,8 +29,7 @@ angular.module('songhop.services', [])
 
     return o;
   })
-  .factory('Recommendations', function($http, $q, SERVER) {
-    var media;
+  .factory('Recommendations', function($http, $q, SERVER, Play) {
     var o = {
       queue: []
     };
@@ -44,27 +43,19 @@ angular.module('songhop.services', [])
     }
 
     o.playCurrentSong = function() {
-      var defer = $q.defer();
 
-      media = new Audio(o.queue[0].preview_url);
-
-      media.addEventListener('loadeddata', function(){
-        defer.resolve();
-      });
-
-      media.play();
-
-      return defer.promise;
+      return Play.playSong(o.queue[0]);
     }
 
     o.haltAudio = function(){
-      if (media) media.pause();
+      Play.pauseSong();
     }
 
     o.getNextSongs = function() {
       return $http({
         method: 'GET',
-        url: SERVER.url + '/recommendations'
+        // url: SERVER.url + '/recommendations'
+        url: 'https://api.soundcloud.com/users/97314807/tracks?client_id=1ed7c8c3ff1c4d3e7ecc37858611ac81'
       }).success(function(data){
         // merge data into the queue
         o.queue = o.queue.concat(data);
@@ -81,6 +72,36 @@ angular.module('songhop.services', [])
       if (o.queue.length <= 3) {
         o.getNextSongs();
       }
+    }
+
+    return o;
+  })
+  .factory('Play', function($http, $q, SERVER) {
+    var media;
+    var o = {};
+
+    o.playSong = function(thisSong) {
+      o.pauseSong();
+      var defer = $q.defer();
+
+      $http({
+        method: 'GET',
+        url: 'https://api.soundcloud.com/i1/tracks/' + thisSong.id + '/streams?client_id=' + SERVER.scid
+      }).success(function(data){
+        // merge data into the queue
+        media = new Audio(data.http_mp3_128_url);
+
+        media.addEventListener('loadeddata', function(){
+          defer.resolve();
+        });
+
+        media.play();
+      });
+      return defer.promise;
+    }
+
+    o.pauseSong = function(){
+      if (media) media.pause();
     }
 
     return o;
