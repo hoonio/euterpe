@@ -1,7 +1,7 @@
 {
-  "name": "songhop",
-  "version": "1.0.0",
-  "description": "songhop: An Ionic project",
+  "name": "feria",
+  "version": "0.2.0",
+  "description": "Music streaming service from #Feria @Hoonio performances",
   "dependencies": {
     "gulp": "^3.5.6",
     "gulp-sass": "^0.7.1",
