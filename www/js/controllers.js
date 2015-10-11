@@ -67,14 +67,29 @@ Controller for the favorites page
   // get the list of our favorites from the user service
   $scope.favorites = User.favorites;
   $scope.media;
+  $scope.currentPlaying = 0;
 
   $scope.removeSong = function(song, index) {
     User.removeSongFromFavorites(song, index);
   };
 
   $scope.openSong = function(song) {
+    console.log(song);
     // $window.open(song.open_url, "_system");
-    Play.playSong(song);
+    if ($scope.currentPlaying == 0){
+      Play.playSong(song);
+      $scope.currentPlaying = song.id;
+    }
+    else if ($scope.currentPlaying == song.id) {
+      Play.pauseSong();
+      $scope.currentPlaying = 0;
+    }
+    else {
+      Play.pauseSong();
+      Play.playSong(song);
+      $scope.currentPlaying = song.id;
+    }
+    console.log($scope.currentPlaying);
   };
 })
 

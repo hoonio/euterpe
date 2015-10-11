@@ -81,7 +81,7 @@ angular.module('songhop.services', [])
     var o = {};
 
     o.playSong = function(thisSong) {
-      o.pauseSong();
+      // o.pauseSong();
       var defer = $q.defer();
 
       $http({
@@ -97,10 +97,12 @@ angular.module('songhop.services', [])
 
         media.play();
       });
+      console.log('playing the song');
       return defer.promise;
     }
 
     o.pauseSong = function(){
+      console.log('pausing the song');
       if (media) media.pause();
     }
 
